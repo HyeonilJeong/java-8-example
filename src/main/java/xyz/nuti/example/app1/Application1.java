@@ -5,7 +5,11 @@ package xyz.nuti.example.app1;
  */
 public class Application1 {
 	public void run() {
-		process(()->System.out.println("Hello"));
+		process(()->a());
+	}
+	
+	public void a() {
+		System.out.println("hello");
 	}
 
 	public void process(Runnable r) {

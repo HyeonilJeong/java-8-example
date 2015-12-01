@@ -1,3 +1,7 @@
 .idea/
 java-8-example.iml
 target/
+.classpath
+.project
+.settings/
+bin/
