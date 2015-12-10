@@ -18,6 +18,10 @@ public class Modern2 {
 		runExample3();
 		System.out.println("\nexample4\n");
 		runExample4();
+		System.out.println("\nexample5\n");
+		runExample5();
+		System.out.println("\nexample6\n");
+		runExample6();
 	}
 
 	private void runExample1() {
@@ -57,6 +61,26 @@ public class Modern2 {
 	}
 
 	private void runExample5() {
+		final CalculatorService5 calculatorService = new CalculatorService5();
+		final int additionResult = calculatorService.calculate(new Addition(), 1, 1);
+		System.out.println(additionResult);
+		final int subtractionResult = calculatorService.calculate(new Subtraction(), 1, 1);
+		System.out.println(subtractionResult);
+		final int multiplicationResult = calculatorService.calculate(new Multiplication(), 1, 1);
+		System.out.println(multiplicationResult);
+		final int divisionResult = calculatorService.calculate(new Division(), 8, 4);
+		System.out.println(divisionResult);
+	}
 
+	private void runExample6() {
+		final CalculatorService5 calculatorService = new CalculatorService5();
+		final int additionResult = calculatorService.calculate((num1, num2) -> num1 + num2, 1, 1);
+		System.out.println(additionResult);
+		final int subtractionResult = calculatorService.calculate((num1, num2) -> num1 - num2, 1, 1);
+		System.out.println(subtractionResult);
+		final int multiplicationResult = calculatorService.calculate((num1, num2) -> num1 * num2, 1, 1);
+		System.out.println(multiplicationResult);
+		final int divisionResult = calculatorService.calculate((num1, num2) -> num1 / num2, 8, 4);
+		System.out.println(divisionResult);
 	}
 }

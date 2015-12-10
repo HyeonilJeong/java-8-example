@@ -5,18 +5,16 @@ package xyz.nuti.example.modern2;
  *
  * Requirement
  *
- * Calculator for addition, subtraction, multiplication and subtraction.
+ * Calculator for addition, subtraction, multiplication and division.
  *
  * Using strategy pattern.
  */
 public class CalculatorService5 {
-	private final Calculation calculation;
 
-	public CalculatorService5(Calculation calculation) {
-		this.calculation = calculation;
+	public CalculatorService5() {
 	}
 
-	public int calculate(int num1, int num2) {
+	public int calculate(Calculation calculation, int num1, int num2) {
 		return calculation.calculate(num1, num2);
 	}
 }
