@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -55,12 +56,35 @@ public class Modern8 {
 		final List<Product> productList = makeProductList();
 		final BigDecimal twenty = new BigDecimal("20");
 
-		final List<Product> result = filter(productList, product -> product.getPrice().compareTo(twenty) >= 0);
+		System.out.println("products >= $20: " + filter(productList, product -> product.getPrice().compareTo(twenty) >= 0));
+		System.out.println("products <= $10: " + filter(productList, product -> product.getPrice().compareTo(new BigDecimal("10")) <= 0));
 
-		System.out.println(result);
+		List<Product> expensiveProducts = filter(productList, product -> product.getPrice().compareTo(new BigDecimal("50")) > 0);
+		final List<DiscountedProduct> discountedProducts = map(expensiveProducts, product -> new DiscountedProduct(product.getId(), product.getName(), product.getPrice().multiply(new BigDecimal("0.5"))));
+
+		System.out.println("expensive products: " + expensiveProducts);
+		System.out.println("discounted products: " + discountedProducts);
+
+		final Predicate<Product> lessThanOrEqualTo30 = product -> product.getPrice().compareTo(new BigDecimal("30")) <= 0; ;
+
+		System.out.println("discounted products (<= $30): " + filter(discountedProducts, lessThanOrEqualTo30));
+		System.out.println("products (<= $30): " + filter(productList, lessThanOrEqualTo30));
+
+		List<BigDecimal> prices = map(productList, product -> product.getPrice());
+		BigDecimal total = BigDecimal.ZERO;
+
+		for (final BigDecimal price : prices) {
+			total = total.add(price);
+		}
+
+		System.out.println("total: " + total);
+		System.out.println("new total: " + total(productList, product -> product.getPrice()));
+		System.out.println("discounted total: " + total(discountedProducts, product -> product.getPrice()));
+
+
 	}
 
-	private <T> List<T> filter(List<T> list, Predicate<T> predicate) {
+	private <T> List<T> filter(List<T> list, Predicate<? super T> predicate) {
 		final List<T> result = new ArrayList<T>();
 
 		for (final T t : list) {
@@ -69,6 +93,26 @@ public class Modern8 {
 			}
 		}
 		return result;
+	}
+
+	private <T, R> List<R> map(List<T> list, Function<T, R> function) {
+		List<R> result = new ArrayList<R>();
+
+		for (final T t : list) {
+			result.add(function.apply(t));
+		}
+
+		return result;
+	}
+
+	private <T> BigDecimal total(List<T> list, Function<T, BigDecimal> mapper) {
+		BigDecimal total = BigDecimal.ZERO;
+
+		for (final T t : list) {
+			total = total.add(mapper.apply(t));
+		}
+
+		return total;
 	}
 
 	private List<Product> makeProductList() {
