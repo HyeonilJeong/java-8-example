@@ -17,6 +17,8 @@ public class Modern8 {
 		runExample2();
 
 		runExample3();
+
+		runExample4();
 	}
 
 	private void runExample1() {
@@ -80,8 +82,18 @@ public class Modern8 {
 		System.out.println("total: " + total);
 		System.out.println("new total: " + total(productList, product -> product.getPrice()));
 		System.out.println("discounted total: " + total(discountedProducts, product -> product.getPrice()));
+	}
 
+	private void runExample4() {
+		Order order = new Order(1L, "on-1234", Arrays.asList(
+				new OrderedItem(1L, new Product(1L, "A", new BigDecimal("10.00")), 2),
+				new OrderedItem(2L, new Product(2L, "B", new BigDecimal("55.50")), 1),
+				new OrderedItem(3L, new Product(3L, "C", new BigDecimal("17.45")), 5),
+				new OrderedItem(4L, new Product(4L, "D", new BigDecimal("23.00")), 10),
+				new OrderedItem(5L, new Product(5L, "E", new BigDecimal("110.99")), 7)
+		));
 
+		System.out.println("total price: " + order.totalPrice());
 	}
 
 	private <T> List<T> filter(List<T> list, Predicate<? super T> predicate) {

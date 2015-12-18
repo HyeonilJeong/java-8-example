@@ -1,6 +1,8 @@
 package xyz.nuti.example.modern8;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by Hyeonil Jeong on 2015-12-17.
@@ -52,5 +54,19 @@ public class Order {
 				.append(", items=").append(items)
 				.append('}')
 				.toString();
+	}
+
+	public BigDecimal totalPrice() {
+		return total(items, item -> item.getItemTotal());
+	}
+
+	private <T> BigDecimal total(List<T> list, Function<T, BigDecimal> mapper) {
+		BigDecimal total = BigDecimal.ZERO;
+
+		for (final T t : list) {
+			total = total.add(mapper.apply(t));
+		}
+
+		return total;
 	}
 }

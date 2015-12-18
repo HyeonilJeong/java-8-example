@@ -1,5 +1,7 @@
 package xyz.nuti.example.modern8;
 
+import java.math.BigDecimal;
+
 /**
  * Created by Hyeonil Jeong on 2015-12-17.
  */
@@ -7,6 +9,10 @@ public class OrderedItem {
 	private Long id;
 	private Product product;
 	private int quantity;
+
+	public BigDecimal getItemTotal() {
+		return product.getPrice().multiply(new BigDecimal(quantity));
+	}
 
 	public OrderedItem() {
 	}
